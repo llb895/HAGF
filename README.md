@@ -102,4 +102,5 @@ If you use **ELSM** framework in your own studies, and work, please cite it by u
 
 <a id="section7"></a>
 ## 7 References
-[^1]:D. Mathios, J.S. Johansen, S. Cristiano, J.E. Medina, J. Phallen, K.R. Larsen, D.C. Bruhm, N. Niknafs, L. Ferreira, V.J.N.c. Adleff, Detection and characterization of lung cancer using cell-free DNA fragmentomes, 12 (2021) 5060.
+[^1]:Zhang H, Dong P, Guo S, et al. Hypomethylation in HBV integration regions aids non-invasive surveillance to hepatocellular carcinoma by low-pass genome-wide bisulfite sequencing[J]. BMC medicine, 2020, 18: 1-14.
+[^2]:Pham T M Q, Phan T H, Jasmine T X, et al. Multimodal analysis of genome-wide methylation, copy number aberrations, and end motif signatures enhances detection of early-stage breast cancer[J]. Frontiers in Oncology, 2023, 13: 1127086.
