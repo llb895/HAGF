@@ -11,10 +11,10 @@ cfDNA甲基化修饰、拷贝数变异（CNA）和cfDNA片段模式分别表征�
 ## Table of Contents
 * | [1 Environment](#section1) |<br>
 * | [2 Preparation](#section2) |<br>
-* | [3 Model Prediction](#section4) |<br>
-* | [4 Output Results](#section5) |<br>
-* | [5 Citation](#section6) |<br>
-* | [6 References](#section7) |<br>
+* | [3 Model Prediction](#section3) |<br>
+* | [4 Output Results](#section4) |<br>
+* | [5 Citation](#section5) |<br>
+* | [6 References](#section6) |<br>
 
 
 <a id="section1"></a>
