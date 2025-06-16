@@ -48,9 +48,8 @@ project
    │   │
    │   │   ...
 ```
+The ***model*** directory stores HAGF model code and related data processing tools. <br>
 The ***dataset*** directory contains raw sample data. <br>
-The ***model*** directory stores ELSM model code and related data processing tools. <br>
-The ***sample_level_evaluation_strategy_result*** directory holds sampling-resampled data.<br>
 The ***result*** directory contains the predicted output matrix.<br>
 
 <a id="section3"></a>
