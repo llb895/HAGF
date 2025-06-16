@@ -5,7 +5,7 @@ cfDNA甲基化修饰、拷贝数变异（CNA）和cfDNA片段模式分别表征�
 
 ## Overview
 <div align=center>
-<img src="https://github.com/llb895/ELSM/blob/main/Fig/1.png">
+<img src="https://github.com/llb895/HAGF/blob/main/fig1.jpg">
 </div>
 
 ## Table of Contents
