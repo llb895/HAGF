@@ -54,13 +54,23 @@ The ***result*** directory contains the predicted output matrix.<br>
 <a id="section3"></a>
 ## 3 Model Prediction
 ### In cross-validation
-For the sample-level resampled data, model predictions are performed using an early-late fusion neural network.
+First, enter the model folder.
 ```
 cd /ELSM/model/
-python execution_cross.py "../sample_level_evaluation_strategy_result/" 
 ```
-The path ***'../sample_level_evaluation_strategy_result/'*** indicates the data storage location.<br>
-Similarly, this is applicable to independent validation.
+Validate the model on Zhang et al.'s dataset.
+```
+python Cancer_Prediction_CRA001537.py 
+```
+Perform cross-validation of the model on Pham et al.'s dataset.
+```
+python Cancer_Prediction_cross_PRJNA929650.py
+```
+Perform independent-validation of the model on Pham et al.'s dataset.
+```
+python Cancer_Prediction_val_PRJNA929650.py
+```
+The results are stored in the **result** folder.
 
 <a id="section4"></a>
 ## 4 Output Results
