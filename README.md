@@ -33,17 +33,13 @@ In this study, we demonstrate the functionality of HAGF through a case study. Us
 project
 │   README.md
 │   
-└───ELSM
+└───HAGF
    │   readme.txt
-   │
-   └───sample_level_evaluation_strategy_result
-   │   │
-   │   │   ...    
    │
    └───model
    │   │
-   │   │   ...
-   │ 
+   │   │   ...    
+   │
    └───dataset
    │   │
    │   │   ...
