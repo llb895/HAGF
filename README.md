@@ -1,6 +1,6 @@
-# 基于多模态cfDNA特征的通用型液体活检框架实现高灵敏HCC与乳腺癌诊断
+# Hierarchically Adaptive Gated Fusion for Multimodal cfDNA Feature Integration Enables High-Accuracy Cancer Detection
 ## Introduction
-cfDNA甲基化修饰、拷贝数变异（CNA）和cfDNA片段模式分别表征了表观遗传信息的不同维度，均为极具前景的早期癌症检测生物标志物。整合三者有望显著提升癌症诊断性能；然而，其固有的高度异质性给多模态数据融合带来了巨大挑战。为了克服这些限制，有效整合cfDNA中蕴含的互补多模态信息，本研究提出了层次化自适应门控融合网络 (HAGF)。该模型的核心创新在于其强大的高维小样本学习能力；其自适应门控机制可动态学习并输出每一特征维度的重要性权重，为模型决策提供良好的生物学解释性；HAGF能够对不同类型的特征进行深层次的高维抽象表征学习，充分挖掘每种模态数据的内部模式。在HCC和大型乳腺癌队列中，HAGF展现出优异的区分能力和普适性。这些结果充分证明HAGF框架能够有效整合多模态cfDNA特征，实现高精度肿瘤检测，为开发适用于多种癌症的通用型液体活检工具奠定了坚实技术基础。
+Cell-free DNA (cfDNA) methylation, copy number variations (CNV), and fragmentation patterns are distinct genomic and epigenetic biomarkers with strong potential for early cancer detection. Integrating these modalities can significantly enhance diagnostic accuracy, but their high heterogeneity challenges effective multimodal fusion. To address this, we propose the Hierarchical Adaptive Gating Fusion network (HAGF), which excels in high-dimensional learning with limited samples. Its adaptive gating mechanism dynamically assigns importance weights to each feature dimension, ensuring robust biological interpretability. Additionally, HAGF enables deep, abstract representation learning across diverse feature types, fully capturing each modality’s intrinsic patterns. Validated on large-scale, diverse cancer datasets, HAGF demonstrates superior discriminative power and generalization. These findings confirm HAGF’s ability to integrate multimodal cfDNA features for high-accuracy tumor detection, providing a robust foundation for a versatile, multi-cancer liquid biopsy assay.
 
 
 ## Overview
@@ -82,7 +82,7 @@ The prediction results are stored in the ***result*** folder.
 If you use **HAGF** framework in your own studies, and work, please cite it by using the following:
 ```
 @article{HAGF,
-    title={基于多模态cfDNA特征的通用型液体活检框架实现高灵敏HCC与乳腺癌诊断},
+    title={Hierarchically Adaptive Gated Fusion for Multimodal cfDNA Feature Integration Enables High-Accuracy Cancer Detection},
     author={Libo Lu, ..., and Xionghui Zhou},
     year={2025},
 }
