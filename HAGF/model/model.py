@@ -16,7 +16,8 @@ def entmax(alpha, x):
 
 #divides the input features into groups, applies multiple learnable sparse masks per group to select features, then processes each masked group through attention-like transformations before aggregating and concatenating the results.
 class DynamicFeatureGroupingLayer(nn.Module):
-    def __init__(self, input_size, hidden_size, num_masks,group_ratio=0.1):
+    def __init__(self, input_size, hidden_size, num_masks, group_ratio=0.1,
+                 num_heads=4, num_transformer_layers=1, dropout=0.1):
         super().__init__()
         self.input_size = input_size
         self.hidden_size = hidden_size
@@ -25,35 +26,65 @@ class DynamicFeatureGroupingLayer(nn.Module):
 
         self.base_group_size = max(1, int(input_size * group_ratio))
         self.num_groups = (input_size + self.base_group_size - 1) // self.base_group_size
-       
+
         self.W_masks = nn.ParameterList([
             nn.ParameterList([
                 nn.Parameter(torch.randn(
-                    self.base_group_size if i < self.num_groups-1 
-                    else input_size - i*self.base_group_size
-                )) 
+                    self.base_group_size if i < self.num_groups - 1
+                    else input_size - i * self.base_group_size
+                ))
                 for _ in range(num_masks)
             ]) for i in range(self.num_groups)
         ])
         
         self.W1s = nn.ParameterList([
-            nn.Parameter(torch.randn(hidden_size, 
-                self.base_group_size if i < self.num_groups-1 
-                else input_size - i*self.base_group_size
-            )) 
+            nn.Parameter(torch.randn(
+                hidden_size,
+                self.base_group_size if i < self.num_groups - 1
+                else input_size - i * self.base_group_size
+            ))
             for i in range(self.num_groups)
         ])
         self.W2s = nn.ParameterList([
-            nn.Parameter(torch.randn(hidden_size, 
-                self.base_group_size if i < self.num_groups-1 
-                else input_size - i*self.base_group_size
-            )) 
+            nn.Parameter(torch.randn(
+                hidden_size,
+                self.base_group_size if i < self.num_groups - 1
+                else input_size - i * self.base_group_size
+            ))
             for i in range(self.num_groups)
         ])
         
         self.bn1s = nn.ModuleList([nn.LayerNorm(hidden_size) for _ in range(self.num_groups)])
         self.bn2s = nn.ModuleList([nn.LayerNorm(hidden_size) for _ in range(self.num_groups)])
 
+        # Group positional embedding for inter-group attention
+        self.group_pos_embedding = nn.Parameter(
+            torch.randn(1, self.num_groups, hidden_size)
+        )
+
+        # Inter-group transformer encoder
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=hidden_size,
+            nhead=num_heads,
+            dim_feedforward=hidden_size * 4,
+            dropout=dropout,
+            batch_first=True,
+            activation='gelu'
+        )
+        self.group_transformer = nn.TransformerEncoder(
+            encoder_layer,
+            num_layers=num_transformer_layers
+        )
+
+        # Project each group token back to its original group size
+        self.group_projs = nn.ModuleList([
+            nn.Linear(
+                hidden_size,
+                self.base_group_size if i < self.num_groups - 1
+                else input_size - i * self.base_group_size
+            )
+            for i in range(self.num_groups)
+        ])
 
     def forward(self, x):
         
@@ -62,8 +93,10 @@ class DynamicFeatureGroupingLayer(nn.Module):
         outputs = []
         for i in range(self.num_groups):
             start = i * self.base_group_size
-            end = start + (self.base_group_size if i < self.num_groups-1 
-                          else self.input_size - i*self.base_group_size)
+            end = start + (
+                self.base_group_size if i < self.num_groups - 1
+                else self.input_size - i * self.base_group_size
+            )
             x_part = x[:, start:end]
             
             group_output = 0
@@ -83,8 +116,24 @@ class DynamicFeatureGroupingLayer(nn.Module):
         
         self.all_masks_concat = torch.stack(
             [torch.cat(mask_parts, dim=0) for mask_parts in self.all_masks_concat], dim=0
-        )   
-        return torch.cat(outputs, dim=1)
+        )
+
+        # Stack group outputs as tokens: [B, num_groups, hidden_size]
+        group_tokens = torch.stack(outputs, dim=1)
+
+        # Add positional embedding
+        group_tokens = group_tokens + self.group_pos_embedding
+
+        # Apply inter-group transformer
+        group_tokens = self.group_transformer(group_tokens)
+
+        # Project each group token back to its original feature size
+        reconstructed_groups = []
+        for i in range(self.num_groups):
+            reconstructed_groups.append(self.group_projs[i](group_tokens[:, i, :]))
+
+        # Concatenate all groups to recover the original input size
+        return torch.cat(reconstructed_groups, dim=1)
                 
 
 #progressively abstracts input features through stacked dynamic grouping layers, then combines the final transformed features with a nonlinear projection of the original input for enhanced representation.        
@@ -171,4 +220,5 @@ class CrossModalFusionClassifier(nn.Module):
  
  
  
+
  
