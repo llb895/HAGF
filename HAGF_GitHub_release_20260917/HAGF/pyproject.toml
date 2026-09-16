@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hagf-cfdna"
+version = "0.1.0"
+description = "Hierarchical Adaptive Gating Network for multimodal cfDNA fusion"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  {name = "Libo Lu"}
+]
+dependencies = [
+  "torch==2.6.0",
+  "numpy==2.2.6",
+  "pandas==2.3.3",
+  "scikit-learn==1.7.2",
+  "scipy==1.15.3",
+  "statsmodels==0.14.6",
+  "matplotlib==3.10.9",
+  "seaborn>=0.13,<0.14",
+  "requests>=2.31,<3"
+]
+
+[tool.setuptools.packages.find]
+include = ["hagf*"]
